@@ -1,10 +1,11 @@
 import React, {useState, useContext} from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import {Text, Input, Button} from 'react-native-elements';
-import Spacer from '../components/Spacer';
+import Spacer from './Spacer';
 import {Context as AuthContext} from '../context/AuthContext';
+import NavLink from './NavLink';
 
-const Sign = ({nav,title,sign,signFunc,buttonTitle}) => {
+const Sign = ({routeName,title,sign,signFunc,buttonTitle}) => {
     const {state} = useContext(AuthContext);
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
@@ -31,11 +32,10 @@ const Sign = ({nav,title,sign,signFunc,buttonTitle}) => {
           {state.error ? <Text style={styles.errorMessage}>{state.error}</Text>:null}
       <Spacer>
         <Button title={buttonTitle} onPress={()=> signFunc(email,password)}/>
-        <Spacer>
-        <TouchableOpacity onPress={()=> nav()}>
-          <Text style={styles.signin}>{sign}</Text>
-        </TouchableOpacity>
-        </Spacer>
+        <NavLink
+          routeName={routeName}
+          sign={sign}
+        />
       </Spacer>
       
   </View>;
@@ -50,10 +50,7 @@ const styles = StyleSheet.create({
         marginTop: 15,
         marginLeft: 15,
         color: 'red'
-    },
-    signin:{
-      color: 'blue'
-    }    
+    } 
   });
 
 export default Sign;

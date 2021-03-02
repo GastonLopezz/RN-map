@@ -1,15 +1,19 @@
 import React, {useContext}from 'react';
 import { View, StyleSheet, Text } from 'react-native';
+import {NavigationEvents} from 'react-navigation';
 import Sign from '../components/Sign';
 import {Context as AuthContext} from '../context/AuthContext';
 
-const SigninScreen = ({navigation}) => {
-  const {signin} = useContext(AuthContext);
+const SigninScreen = () => {
+  const {signin, clearErrorMessage} = useContext(AuthContext);
   return <View style={styles.view}>
+      <NavigationEvents
+        onWillBlur= {clearErrorMessage}
+      />
       <Sign 
         title="Sign In for Tracker"
         buttonTitle="Sign In"
-        nav={()=>navigation.navigate('Signup')} 
+        routeName="Signup"
         sign="Don't have an account? Sign up instead"
         signFunc={(email,password)=> signin({email,password})}
         />
